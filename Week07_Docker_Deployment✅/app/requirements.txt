@@ -1,6 +1,0 @@
-fastapi
-uvicorn[standard]
-sqlalchemy[asyncio]
-pydantic
-pydantic-settings
-aiosqlite

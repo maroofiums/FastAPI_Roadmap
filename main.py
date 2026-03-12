@@ -1,9 +1,8 @@
-import os
+from pathlib import Path
 
 # Base path
-base_path = "P:/Python/FastAPI_Roadmap"
+BASE_PATH = Path("P:/FastAPI_Roadmap")
 
-# Week-wise structure (FIXED)
 roadmap = {
     "Week01_Fundamentals": [
         "main.py",
@@ -68,27 +67,30 @@ roadmap = {
         "app/__init__.py",
         "app/main.py",
     ],
-    "Week08_CICD_Performance": [
-        "main.py",
-        "README.md",
-        ".github/workflows/ci.yml",
-        "app/__init__.py",
-        "app/logging_config.py",
-        "app/monitoring/metrics.py",
-    ]
 }
 
-# Create directories and files
-for week, files in roadmap.items():
-    week_dir = os.path.join(base_path, week)
-    os.makedirs(week_dir, exist_ok=True)
-    for file in files:
-        file_path = os.path.join(week_dir, file)
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, 'w') as f:
-            f.write(f"# {os.path.basename(file)}\n")
+def create_file(path: Path):
+    path.parent.mkdir(parents=True, exist_ok=True)
 
-# Create README.md in base dir
-base_readme_path = os.path.join(base_path, "README.md")
-with open(base_readme_path, 'w') as f:
-    f.write("# FastAPI Roadmap\n")
+    if not path.exists():
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(f"# {path.name}\n")
+        print(f"Created: {path}")
+
+for week, files in roadmap.items():
+    week_dir = BASE_PATH / week
+    week_dir.mkdir(parents=True, exist_ok=True)
+
+    for file in files:
+        file_path = week_dir / file
+        create_file(file_path)
+
+# Base README
+base_readme = BASE_PATH / "README.md"
+
+if not base_readme.exists():
+    base_readme.write_text(
+        "# FastAPI Roadmap\n\nStructured weekly roadmap for learning FastAPI.\n"
+    )
+
+print("FastAPI roadmap structure created successfully.")
