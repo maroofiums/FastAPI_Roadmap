@@ -1,179 +1,344 @@
-# 🗓️ FastAPI Learning Plan – Week-by-Week (7 Weeks)
+# **FastAPI Learning Plan – Week-by-Week (7 Weeks)**
 
 ---
 
-### ✅ **Week 1: FastAPI Fundamentals**
+# Week 1 — FastAPI Fundamentals
 
-**Goals:**
+### Goals
 
-* Understand FastAPI’s core structure
-* Learn request/response cycle
-* Learn Pydantic basics
+* Understand FastAPI core architecture
+* Understand request/response lifecycle
+* Learn **Pydantic validation**
+* Explore automatic documentation
 
-**Topics:**
+### Topics
 
-* Installing FastAPI + Uvicorn
-* GET, POST routes
-* Path & query parameters
-* Request bodies with Pydantic
+* Installing **FastAPI**
+* Running server with **Uvicorn**
+* GET and POST endpoints
+* Path parameters
+* Query parameters
+* Request body validation
 * Response models
-* Built-in Swagger docs
+* Swagger / OpenAPI documentation
 
-**Build:**
+### Build
 
-* Simple product/item catalog API
+**Item / Product Catalog API**
 
-**Resources:**
+Endpoints
 
-* [https://fastapi.tiangolo.com/tutorial/](https://fastapi.tiangolo.com/tutorial/)
-* YouTube: *FastAPI Crash Course – Traversy Media*
+```
+GET /items
+GET /items/{id}
+POST /items
+```
+
+### Key Concept
+
+Request → Validation → Processing → Response
+
+### Resources
+
+FastAPI Official Tutorial
+Traversy Media FastAPI Crash Course
 
 ---
 
-### ✅ **Week 2: CRUD + Pydantic + Routers**
+# Week 2 — CRUD + Routers + Project Structure
 
-**Goals:**
+### Goals
 
-* Master full CRUD APIs
-* Structure your code (routers, services)
-* Learn response modeling
+* Master CRUD APIs
+* Structure a backend project
+* Learn modular routing
 
-**Topics:**
+### Topics
 
-* PUT, DELETE methods
-* `APIRouter` for modular routing
-* Path vs body data handling
-* Pydantic field validation
+* PUT & DELETE methods
+* APIRouter
+* Request vs response models
 * Optional parameters
+* Data validation
 
-**Build:**
+### Project Structure
 
-* Blog API with `/posts`, `/posts/{id}`, etc.
-* Use response models to hide internal fields
+```
+app
+ ├── main.py
+ ├── routers
+ │    └── posts.py
+ ├── schemas
+ │    └── post.py
+ ├── models
+ │    └── post.py
+ └── services
+      └── post_service.py
+```
 
-**Resources:**
+### Build
 
-* [https://fastapi.tiangolo.com/tutorial/body/](https://fastapi.tiangolo.com/tutorial/body/)
+**Blog API**
+
+Endpoints
+
+```
+GET /posts
+GET /posts/{id}
+POST /posts
+PUT /posts/{id}
+DELETE /posts/{id}
+```
+
+Features
+
+* Response models
+* Hide internal DB fields
 
 ---
 
-### ✅ **Week 3: Databases with SQLAlchemy**
+# Week 3 — Database Integration
 
-**Goals:**
+### Goals
 
-* Persist data with SQLAlchemy + SQLite
-* Build models and CRUD operations
+* Persist data in database
+* Learn ORM concepts
 
-**Topics:**
+### Topics
 
-* SQLAlchemy ORM
+* **SQLAlchemy**
+* SQLite/PostgreSQL database
 * Dependency injection for DB sessions
-* Pydantic + SQLAlchemy conversion
-* Create & migrate DB
+* ORM models
+* One-to-many relationships
+* Pagination & filtering
 
-**Build:**
+### Build
 
-* User + Post models with one-to-many relationship
+**Users + Posts system**
 
-**Resources:**
+Models
 
-* [https://fastapi.tiangolo.com/tutorial/sql-databases/](https://fastapi.tiangolo.com/tutorial/sql-databases/)
+```
+User
+Post
+```
 
----
+Relationship
 
-### ✅ **Week 4: Authentication with JWT**
+```
+User → many Posts
+```
 
-**Goals:**
+### Example Endpoint
 
-* Build login/signup system
-* Use OAuth2 with JWT
-
-**Topics:**
-
-* Password hashing (`passlib`)
-* OAuth2PasswordBearer
-* Token route (`/token`)
-* Dependency-injected `get_current_user`
-
-**Build:**
-
-* Auth system with protected routes
-
-**Resources:**
-
-* [https://fastapi.tiangolo.com/tutorial/security/](https://fastapi.tiangolo.com/tutorial/security/)
+```
+GET /posts?page=1&limit=10
+```
 
 ---
 
-### ✅ **Week 5: Async Programming + Background Tasks**
+# Week 4 — Authentication & Security
 
-**Goals:**
+### Goals
 
-* Understand async I/O in FastAPI
-* Run background jobs
+* Build secure authentication system
+* Protect API endpoints
 
-**Topics:**
+### Topics
 
-* `async def` endpoints
-* `asyncpg` or `Databases` library
-* `BackgroundTasks` for jobs (e.g. email sending)
-* Async HTTP calls with `httpx`
+* Password hashing with **Passlib**
+* OAuth2 authentication
+* JWT tokens using **python-jose**
+* Token authentication
+* Protected routes
 
-**Build:**
+### Key Components
 
-* API that fetches external data and stores it asynchronously
-* Email simulation API (task queue pattern)
+```
+/signup
+/login
+/token
+/protected-route
+```
 
----
+### Build
 
-### ✅ **Week 6: Testing + Environment Configs**
+**JWT Auth System**
 
-**Goals:**
+Features
 
-* Write unit/integration tests
-* Manage environment configs
-
-**Topics:**
-
-* `pytest`, `TestClient`
-* Dependency overrides for mocking
-* `.env` with `python-dotenv`
-* Config classes via Pydantic `BaseSettings`
-
-**Build:**
-
-* Write tests for auth, CRUD routes
-* Use `.env` for DB credentials
+* User registration
+* Login
+* Access token
+* Protected endpoints
 
 ---
 
-### ✅ **Week 7: Docker + Deployment**
+# Week 5 — Async Programming & Background Tasks
 
-**Goals:**
+### Goals
 
-* Dockerize your FastAPI project
-* Deploy to cloud (Render, Fly.io, DigitalOcean)
+* Understand asynchronous APIs
+* Use background processing
 
-**Topics:**
+### Topics
 
-* Dockerfile + `uvicorn[standard]`
-* `docker-compose` for DB + API
-* Production server setup (Gunicorn workers)
-* Render/Fly.io deployment (free tier)
+* async / await
+* Non-blocking I/O
+* BackgroundTasks
+* Async HTTP calls using **HTTPX**
+* Async database drivers
 
-**Build:**
+### Build
 
-* Containerized CRUD API
+**External Data Fetch API**
 
-**Resources:**
+Example
 
-* [https://fastapi.tiangolo.com/deployment/docker/](https://fastapi.tiangolo.com/deployment/docker/)
+```
+GET /weather
+```
+
+Flow
+
+```
+API → external API → store result in database
+```
+
+Also build
+
+**Email simulation system**
+
+```
+POST /send-email
+```
+
+Runs in background task.
 
 ---
 
+# Week 6 — Testing & Configuration
 
+### Goals
 
-* GitHub CI to run `pytest` + lint on every push
-* Instrumentation for metrics
+* Write automated tests
+* Manage configuration securely
+
+### Topics
+
+* Testing with **pytest**
+* FastAPI TestClient
+* Dependency overrides
+* Environment variables
+* `.env` files
+* Config management with Pydantic BaseSettings
+
+### Build
+
+Write tests for
+
+```
+auth routes
+CRUD routes
+database operations
+```
+
+---
+
+# Week 7 — Docker + Deployment
+
+### Goals
+
+* Containerize application
+* Deploy backend to cloud
+
+### Topics
+
+* Dockerfile
+* docker-compose
+* Production servers
+* Logging
+* CI/CD pipelines
+
+### Tools
+
+* **Docker**
+* **GitHub Actions**
+
+### Deployment Options
+
+* **Render**
+* **Fly.io**
+* **DigitalOcean**
+
+### Build
+
+Deploy your **Blog + Auth API**.
+
+---
+
+# Final Project (Very Important)
+
+Instead of separate projects, build **one evolving project**:
+
+### Week progression
+
+Week 1
+Basic API
+
+Week 2
+Blog CRUD API
+
+Week 3
+Add database
+
+Week 4
+Add authentication
+
+Week 5
+Add async features
+
+Week 6
+Add tests
+
+Week 7
+Docker + deploy
+
+Result:
+
+**Production-ready backend project**
+
+---
+
+# Advanced Topics 
+
+Learn these next:
+
+* Dependency injection system
+* Redis caching
+* Rate limiting
+* WebSockets
+* API versioning
+* Microservices
+* Event queues (RabbitMQ / Kafka)
+
+---
+
+# Perfect Project for You (ML + Backend)
+
+Since you're learning ML, build:
+
+### ML Prediction API
+
+Example
+
+```
+POST /predict
+POST /train
+GET /models
+```
+
+FastAPI is widely used for **ML model serving**.
 
 ---
