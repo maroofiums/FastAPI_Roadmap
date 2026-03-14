@@ -1,4 +1,5 @@
 from fastapi import APIRouter,Path,Query
+from app.models import Item
 
 route = APIRouter()
 
@@ -21,4 +22,8 @@ def read_item(item_id: int = Path(..., title="The ID of the item to get", ge=0, 
 @route.get("/search")
 def search_items(q: str = Query(..., min_length=3, max_length=50, regex="^[a-zA-Z0-9]+$")):
     return {"q": q}
+
+@route.post("/items/")
+def create_item(item: Item):
+    return item
 
