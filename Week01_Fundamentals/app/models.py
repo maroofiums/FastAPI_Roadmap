@@ -1,8 +1,11 @@
 from pydantic import BaseModel
 
-class Item(BaseModel):
+class ItemCreate(BaseModel):
     name: str
-    description: str | None = None
     price: float
-    tax: float | None = None
-    
+    description: str 
+    in_stock: bool
+
+class ItemResponse(BaseModel):
+    name: str
+    price: float

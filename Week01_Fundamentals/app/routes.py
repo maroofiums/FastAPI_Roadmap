@@ -1,7 +1,9 @@
 from fastapi import APIRouter,Path,Query
-from app.models import Item
-
+from app.models import ItemResponse,ItemCreate
+from typing import List
 route = APIRouter()
+
+items_db: List[ItemCreate] = []
 
 @route.get("/")
 def greet():
@@ -15,15 +17,25 @@ def pong():
 def healthy():
     return {"msg":"healthy"}
 
-@route.get("/items/{item_id}")
-def read_item(item_id: int = Path(..., title="The ID of the item to get", ge=0, le=1000)):
-        return {"item_id": item_id}
+@route.get("/items/",response_model = [ItemResponse])
+def get_items():
+    return items_db
 
-@route.get("/search")
-def search_items(q: str = Query(..., min_length=3, max_length=50, regex="^[a-zA-Z0-9]+$")):
-    return {"q": q}
-
-@route.post("/items/")
-def create_item(item: Item):
+@route.post("/items/",response_model = ItemResponse)
+def create_items(item:ItemCreate):
+    items_db.append(item)   
     return item
 
+@route.get("/items/{item_id}",response_model = ItemResponse)
+def get_item(item_id:int):
+    return items_db[item_id]
+
+@route.put("/items/{item_id}",response_model = ItemResponse)
+def get_item(item_id:int,item:ItemCreate):
+    items_db[item_id] = item
+    return item
+
+@route.delete("/items/{item_id}")
+def get_item(item_id:int):
+    deleted_item = items_db.pop(item_id)
+    return {"message": "Item deleted", "item": deleted_item.name}
