@@ -3,6 +3,8 @@ from app.models import ItemResponse,ItemCreate
 from typing import List
 route = APIRouter()
 
+# Demo DataBase
+
 items_db: List[ItemCreate] = [
         {
         "name": "Laptop",
@@ -24,6 +26,8 @@ items_db: List[ItemCreate] = [
     }
 ]
 
+# Testing Routes
+
 @route.get("/")
 def greet():
     return {"msg":"Hello"}
@@ -35,6 +39,9 @@ def pong():
 @route.get("/health")
 def healthy():
     return {"msg":"healthy"}
+
+
+# CRUD Routes
 
 @route.get("/items/",response_model = List[ItemResponse])
 def get_items():
