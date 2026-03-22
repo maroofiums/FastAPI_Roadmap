@@ -15,7 +15,8 @@ def create_post(data: PostCreate):
     if posts_db:
         new_id = posts_db[-1]["id"] + 1
     else:
-        new_id = 1 
+        new_id = 1
+
     new_post = {
         "id": new_id,
         "title": data.title,
@@ -23,4 +24,5 @@ def create_post(data: PostCreate):
     }
 
     posts_db.append(new_post)
+
     return new_post

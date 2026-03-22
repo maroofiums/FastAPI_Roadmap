@@ -21,6 +21,6 @@ def get_post(post_id: int):
     
     return post
 
-@router.post("/",response_model=PostResponse)
-def create_posts(data: PostCreate):
-    return create_post(data)
+@router.post("/",response_model=PostResponse) 
+def create_posts(data: PostCreate): 
+    return create_post(data) 
