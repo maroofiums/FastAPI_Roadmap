@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class PostCreate(BaseModel):
     title: str
@@ -9,3 +10,6 @@ class PostResponse(BaseModel):
     title: str
     content: str
 
+class PostUpdate(BaseModel):
+    title: Optional[str] = None
+    content: Optional[str] = None
