@@ -1,5 +1,5 @@
 from fastapi import APIRouter,HTTPException
-from app.crud import get_all_posts,update_post,get_post_by_id,create_post
+from app.crud import get_all_posts,update_post,get_post_by_id,create_post,delete_post
 from app.schemas import PostCreate,PostResponse,PostUpdate
 
 router = APIRouter(prefix="/posts",tags=["Posts"])
@@ -31,3 +31,10 @@ def update(post_id: int, data: PostUpdate):
     if not post:
         raise HTTPException(status_code = 404,detail = "Not Found")
     return post
+
+@router.delete("/{post_id}")
+def delete(post_id:int):
+    post = delete_post(post_id)
+    if not post:
+        raise HTTPException(status_code=404, detail="Not Found")
+    return {"message":"Deleted Successfully"}

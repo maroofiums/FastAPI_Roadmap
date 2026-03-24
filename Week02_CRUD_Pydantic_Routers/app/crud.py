@@ -36,3 +36,10 @@ def update_post(post_id:int,data:PostUpdate):
                 post["content"] = data.content
             return post
     return None
+
+def delete_post(post_id: int):
+    for i,post in enumerate(posts_db):
+        if post_id == post["id"]:
+            return posts_db.pop(i)
+    return None
+
