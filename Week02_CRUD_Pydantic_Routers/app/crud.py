@@ -1,5 +1,6 @@
 from app.models import posts_db
 from app.schemas import PostCreate, PostUpdate
+from datetime import datetime
 
 def get_all_posts():
     return posts_db
@@ -20,7 +21,8 @@ def create_post(data: PostCreate):
     new_post = {
         "id": new_id,
         "title": data.title,
-        "content": data.content
+        "content": data.content,
+        "created_at":datetime.now()
     }
 
     posts_db.append(new_post)
