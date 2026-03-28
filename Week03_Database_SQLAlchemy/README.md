@@ -1,4 +1,4 @@
-Week 3 — Database Integration (Day-by-Day Plan)
+# Week 3 — Database Integration (Day-by-Day Plan)
 
 Goal: Move from “API without memory” → “real backend with persistent database, ORM, and relations”
 
