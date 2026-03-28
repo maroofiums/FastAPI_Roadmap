@@ -1,347 +1,179 @@
-# 🚀 Week 3 — FULL 7 DAY ROADMAP (Database Integration)
+Week 3 — Database Integration (Day-by-Day Plan)
+
+Goal: Move from “API without memory” → “real backend with persistent database, ORM, and relations”
 
 ---
 
-# 📅 **Day 1 — Database Setup + Core Concepts**
+## Day 1 — ORM Foundations (SQLAlchemy Basics)
 
-## 🎯 Goal
+Focus:
 
-Understand how backend connects to database
+* What is ORM (Object Relational Mapping)
+* Difference: raw SQL vs ORM
+* SQLAlchemy setup concept (engine, session, base)
 
-## 🧠 Learn (45–60 min)
+Learn:
 
-* What is ORM
-* Engine vs Session
-* Why DB session lifecycle matters
+* Models = Python classes → database tables
+* Session = connection manager (talks to DB)
 
-👉 Tool:
+Build:
 
-* SQLAlchemy
+* Simple “User” model design (no relationships yet)
+* Understand table → class mapping
 
----
+Task:
 
-## 🛠️ Build (1.5–2 hrs)
-
-* Create `database.py`
-* Setup SQLite DB
-* Create:
-
-  * `engine`
-  * `SessionLocal`
-  * `Base`
-* Add `get_db()` dependency
+* Draw mental mapping:
+  Python class → table → row → column
 
 ---
 
-## 🔥 Test Yourself
+## Day 2 — Database Setup + Dependency Injection
 
-* What is `commit()` vs `refresh()`?
-* Why do we close DB session?
+Focus:
 
----
+* SQLite / PostgreSQL connection
+* Session lifecycle in FastAPI
+* Dependency Injection (DI)
 
-## ✅ Outcome
+Learn:
 
-✔ DB connected to FastAPI
-✔ You understand session lifecycle
+* Why we don’t keep DB session global
+* Request → open session → use → close
 
----
+Build:
 
-# 📅 **Day 2 — Models (Tables) + Relationships**
+* DB connection layer design
+* “get_db” dependency concept
 
-## 🎯 Goal
+Task:
 
-Design real-world DB schema
-
----
-
-## 🧠 Learn (45 min)
-
-* Tables, columns
-* Primary key
-* Foreign key
-* One-to-many relationship
-
-👉 DB:
-
-* SQLite
+* Understand flow:
+  Request → Dependency → Session → Query → Close
 
 ---
 
-## 🛠️ Build (2 hrs)
+## Day 3 — ORM Models (User + Post)
 
-### Create Models:
+Focus:
 
-* `User`
-* `Post`
+* Real schema design
 
-### Add Relationship:
+Learn:
 
-* One user → many posts
+* User table fields (id, name, email)
+* Post table fields (id, title, content, user_id)
 
----
+Build:
 
-## 🔥 Test Yourself
+* Define both models conceptually
+* Primary key vs foreign key
 
-* Why do we use `ForeignKey`?
-* What does `relationship()` do?
+Task:
 
----
-
-## ✅ Outcome
-
-✔ DB schema ready
-✔ Relationships working
+* Visual schema:
+  User (1) → Post (many)
 
 ---
 
-# 📅 **Day 3 — Schemas (Pydantic) + Validation**
+## Day 4 — Relationships (One-to-Many)
 
-## 🎯 Goal
+Focus:
 
-Separate DB layer from API layer
+* Core relational database concept
 
----
+Learn:
 
-## 🧠 Learn (45 min)
+* Foreign key role
+* Relationship mapping (User ↔ Posts)
+* back_populates concept (bidirectional link)
 
-* Pydantic models
-* Input vs Output schemas
-* Data validation
+Build:
 
----
+* Understand:
 
-## 🛠️ Build (2 hrs)
+  * User.posts
+  * Post.user
 
-### Create:
+Task:
 
-* `UserCreate`, `UserResponse`
-* `PostCreate`, `PostResponse`
-
----
-
-## 🔥 Test Yourself
-
-* Why not return SQLAlchemy models directly?
-* What is `from_attributes = True`?
+* Trace data flow:
+  “One user creates many posts”
 
 ---
 
-## ✅ Outcome
+## Day 5 — CRUD with ORM
 
-✔ Clean API structure
-✔ Safe data handling
+Focus:
 
----
+* Database operations using ORM
 
-# 📅 **Day 4 — CRUD Layer (Core Backend Logic)**
+Learn:
 
-## 🎯 Goal
+* Create / Read / Update / Delete using session
+* Query patterns
 
-Write actual DB operations
+Build:
 
----
+* User CRUD
+* Post CRUD (linked to user)
 
-## 🧠 Learn (30–45 min)
+Task:
 
-* CRUD pattern (Create, Read, Update, Delete)
-* Why separation matters
-
----
-
-## 🛠️ Build (2–3 hrs)
-
-### Implement:
-
-* `create_user`
-* `create_post`
-* `get_posts`
-* `get_user`
+* Practice mental flow:
+  API → service → ORM → DB → response
 
 ---
 
-## 🔥 Test Yourself
+## Day 6 — Pagination + Filtering (Real API Behavior)
 
-* Why use a CRUD layer?
-* What happens if we skip it?
+Focus:
 
----
+* Production-style APIs
 
-## ✅ Outcome
+Learn:
 
-✔ Backend logic separated
-✔ Clean architecture
+* limit / offset pagination
+* query parameters
+* filtering by user_id
 
----
+Example behavior:
 
-# 📅 **Day 5 — API Routes + Dependency Injection**
+* GET /posts?page=1&limit=10
+* GET /posts?user_id=3
 
-## 🎯 Goal
+Build:
 
-Connect everything to FastAPI endpoints
+* Paginated post listing logic
 
----
+Task:
 
-## 🧠 Learn (30 min)
-
-* Dependency Injection (`Depends`)
-* How FastAPI manages DB sessions
-
----
-
-## 🛠️ Build (2–3 hrs)
-
-### Endpoints:
-
-* Create User
-* Create Post
-* Get Posts
-* Get User with Posts
+* Understand:
+  Why real APIs never return “all data”
 
 ---
 
-## 🔥 Test Yourself
+## Day 7 — Mini Project Integration (Users + Posts System)
 
-* Why use `Depends(get_db)`?
-* What if DB session is global?
+Focus:
 
----
+* Combine everything
 
-## ✅ Outcome
+Build:
 
-✔ Working backend API
-✔ Proper DB session handling
+* FastAPI app with:
 
----
+  * User endpoints
+  * Post endpoints
+  * Relationships working
+  * Pagination working
 
-# 📅 **Day 6 — Pagination + Filtering + Search**
+Final Outcome:
+You will have:
 
-## 🎯 Goal
-
-Make API scalable (REAL WORLD)
-
----
-
-## 🧠 Learn (30–45 min)
-
-* Pagination logic
-* Filtering queries
-
----
-
-## 🛠️ Build (2–3 hrs)
-
-### Pagination:
-
-```http
-GET /posts?page=1&limit=10
-```
-
-### Logic:
-
-```python
-skip = (page - 1) * limit
-```
-
----
-
-### Add Features:
-
-* Filter by user_id
-* Search by title
-* Order by latest
-
----
-
-## 🔥 Test Yourself
-
-* Why pagination is critical?
-* What happens with 1M records?
-
----
-
-## ✅ Outcome
-
-✔ Production-like API
-✔ Efficient queries
-
----
-
-# 📅 **Day 7 — Final Project + Polish**
-
-## 🎯 Goal
-
-Build a complete backend system
-
----
-
-## 🛠️ Build (3–4 hrs)
-
-### Final System:
-
-#### 👤 Users
-
-* Create user
-* Get user with posts
-
-#### 📝 Posts
-
-* Create post
-* Get posts (pagination)
-* Filter posts
-
----
-
-## 🧠 Add Improvements
-
-### 🔥 Clean Structure
-
-```
-app/
- ├── models.py
- ├── schemas.py
- ├── crud.py
- ├── database.py
- ├── routers/
-```
-
----
-
-### 🔥 Optional Upgrade
-
-* Switch to:
-
-  * PostgreSQL
-
----
-
-## 🧪 FINAL TEST (VERY IMPORTANT)
-
-You must be able to answer:
-
-1. How ORM works internally
-2. Difference between schema & model
-3. How relationships work
-4. How pagination works
-5. How DB session lifecycle works
-
----
-
-## ✅ Final Outcome
-
-After Day 7:
-
-✔ You can build real backend APIs
-✔ You understand DB deeply
-✔ You are **internship-level backend dev**
-
----
-
-# 🧠 Real Talk (Important)
-
-If you:
-
-* Just read → ❌ nothing happens
-* Actually build daily → ✅ you level up fast
+* Real database-backed API
+* ORM-based architecture
+* Clean scalable backend structure
 
 ---
