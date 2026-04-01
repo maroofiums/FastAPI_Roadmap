@@ -7,7 +7,7 @@ def create_user(session: Session, user: User):
     session.refresh(user)
     return user
 
-def get_users(session: Session, user_id: int):
+def get_users(session: Session):
     return session.exec(select(User)).all()
 
 def get_user(session: Session, user_id: int):
@@ -27,8 +27,12 @@ def create_post(session: Session, post: Post):
     session.refresh(post)
     return post
 
-def get_posts(session: Session):
-    return session.exec(select(Post)).all()
+def get_posts(session: Session, page: int = 1, limit: int = 10, user_id: int | None = None):
+    query = select(Post)
+    if user_id is not None:
+        query = query.where(Post.user_id == user_id)
+    offset = (page - 1) * limit
+    return session.exec(query.offset(offset).limit(limit)).all()
 
 def get_post_by_user(session: Session, user_id: int):
     return session.exec(select(Post).where(Post.user_id == user_id)).all()
