@@ -1,1 +1,15 @@
-# crud.py
+from sqlmodel import Session
+from app.models import User
+from app.core.security import get_password_hash
+
+def create_user(db: Session, username: str,email:str, password: str) -> User:
+    hashed_password = get_password_hash(password)
+    user = User(
+        username=username, 
+        email=email,
+        hashed_password=hashed_password
+        )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
